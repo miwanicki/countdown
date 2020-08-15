@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)https://devhtml.dev.bloomberg.com/~miwanicki3/arewethereyet/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link href="./my_index_files/css2" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height">
+<style>
+html {
+  height: 100%;
+  margin: 0px;
+}
+
+body {
+  height: 100%;
+  margin: 0px;
+  /*background-image: linear-gradient(to right, #FFC0CB 0%, #00FFFF 0%);*/
+  background-color: #00FFFF;
+  background-image: repeating-linear-gradient(45deg, #FFC0CB 0px, #FFC0CB 20px, #ffd6dd 20px, #ffd6dd 40px),repeating-linear-gradient(135deg, #FFC0CB 0px, #FFC0CB 20px, #ffd6dd 20px, #ffd6dd 40px),
+  repeating-linear-gradient(45deg, #00e8e8 0px, #00e8e8 20px, #00FFFF 20px, #00FFFF 40px), 
+  repeating-linear-gradient(135deg, #00e8e8 0px, #00e8e8 20px, #00FFFF 20px, #00FFFF 40px);
+  background-size: 0% 50%, 0% 50%, 100% 50%, 100% 50%;
+  background-position: top left, bottom left, top right, bottom right;
+  background-repeat: no-repeat;
+}
+.inside {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+#eod_d {
+  font-size:max(4vh, 24px);
+}
+#eod {
+  font-size:max(11vh, 72px);
+}
+#eod_s {
+  font-size:max(5vh, 36px);
+}
+</style>
+</head>
+<body style="background-size: 100% 50%;">
+<div class="container">
+  <div class="inside" id="eod_d">Big Countdown:</div>
+  <div class="inside" id="eod">Loading...</div>
+  <div class="inside" id="eod_s">Please Wait</div>
+</div>
+
+<script>
+// Set the date we're counting down to
+COB = new Date("2020-10-12")
+COB.setHours(10,0,0,0)
+var countDownDate = COB.getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  var total_seconds = Math.floor(distance / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("eod").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s";
+  document.getElementById("eod_s").innerHTML = "(" + total_seconds.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "s)";
+
+  let prop = (100 - Math.min(total_seconds / (60 * 24 * 60 * 60), 1) * 100).toFixed(2)
+  // console.log(prop)
+
+  // document.body.style.backgroundImage = "linear-gradient(to right, #FFC0CB "+ prop.toString() +"%, #00FFFF 0%)";
+  // linear-gradient(to right, #FFC0CB 0%, #00FFFF 0%);
+  document.body.style.backgroundSize = prop.toString() + "% 50%," + prop.toString() + "% 50%, 100% 50%, 100% 50%"
+
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    // document.body.style.background = "#FFC0CB";
+    document.body.style.backgroundSize = "100% 50%"
+    document.getElementById("eod").innerHTML = "";
+    // "<img src='unnamed.png' style='height:45vh'>"
+    document.getElementById("eod_s").innerHTML = "";
+    document.getElementById("eod_d").innerHTML = "";
+  }
+}, 1000);
+</script>
+
+</body></html>
